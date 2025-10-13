@@ -1,4 +1,11 @@
 document.addEventListener("DOMContentLoaded",() => {
+
+    let checklist = true;
+
+    if(checklist)
+    {
+        document.querySelector('h2').innerHTML = "Empty list";
+    }
     document.querySelector('#button').disabled = true;
 
     document.querySelector('#task').onkeyup = () => {
@@ -24,6 +31,7 @@ document.addEventListener("DOMContentLoaded",() => {
         document.querySelector('#task').value = '';
 
         document.querySelector('#button').disabled = true;
+        document.querySelector('h2').innerHTML = "";
         return false;
     }
 });
