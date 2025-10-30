@@ -55,3 +55,14 @@ document.addEventListener("DOMContentLoaded",() => {
         }
     });
 });
+
+window.onscroll = () => {
+    if(window.innerHeight + window.scrollY >= document.body.offsetHeight)
+    {
+        document.querySelector('body').style.background = 'orange';
+    }
+    else
+    {
+        document.querySelector('body').style.background = 'white';
+    }
+}

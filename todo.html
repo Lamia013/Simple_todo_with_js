@@ -5,8 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo</title>
     <script src="todo.js"></script>
+    <style>
+        @keyframes slide {
+            from {
+                left: 0%;
+            }
+            to {
+                left: 50%;
+            }
+            
+            
+        }
+        #animation{
+            position: relative;
+            animation-name: slide;
+            animation-duration: 3s;
+            animation-fill-mode: forwards;
+        }
+    </style>
 </head>
 <body>
+    <h1 id="animation">Welcome!</h1>
     <h1>Tasks:</h1>
     <ul id="list">
         <h2></h2>
