@@ -1,5 +1,4 @@
-//in planning: delete task, task limit
-//current: local storage implement- add color
+//in planning: deletion
 document.addEventListener("DOMContentLoaded",() => {
 
     let list = JSON.parse(localStorage.getItem('list')) || [];
@@ -21,19 +20,32 @@ document.addEventListener("DOMContentLoaded",() => {
         document.querySelector('#button').disabled = true;
         document.querySelector('h2').innerHTML = "";
         
-        list.push(task.toUpperCase());
+        list.push({
+            text: task.toUpperCase(),
+            color: selectedColor || 'black'
+        });
         localStorage.setItem('list', JSON.stringify(list));
 
     }
+    function checkLimit()
+    {
+        if(list.length >= 10)
+        {
+            document.querySelector('#limit').innerHTML = "Sorry! Maximum 10 tasks can be listed only."; 
+            document.querySelector('form').style.display = 'none'; 
+        }
+    }
 
-    if(list.length !== 0){        
+    if(list.length !== 0){ 
         document.querySelector('h2').innerHTML = "";
-        list.forEach(task => {
+        list.forEach(item => {
             let li = document.createElement('li');
-            li.textContent = task;
+            li.textContent = item.text;
+            li.style.color = item.color;
             document.querySelector('#list').append(li);
         });
     }
+    checkLimit();
     
     document.querySelector('#button').disabled = true;
     document.querySelectorAll('button').forEach((button) => {
@@ -54,7 +66,9 @@ document.addEventListener("DOMContentLoaded",() => {
     }
 
     document.querySelector('form').onsubmit = () => {
+        checkLimit();
         createTask();
+        document.querySelector('h1').innerHTML = list.length;      
         document.querySelectorAll('button').forEach((button) => {
             if(button.id !== 'button') 
             {
@@ -70,9 +84,6 @@ document.addEventListener("DOMContentLoaded",() => {
             button.onclick = () => {
                 selectedColor = button.dataset.color; 
                 document.querySelector('#task').focus();
-                //list.push(selectedColor());
-                //localStorage.setItem('list', JSON.stringify(list));
-
             };
         }
     });
