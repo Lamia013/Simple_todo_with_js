@@ -1,4 +1,3 @@
-//in planning: deletion
 document.addEventListener("DOMContentLoaded",() => {
 
     let list = JSON.parse(localStorage.getItem('list')) || [];
@@ -13,7 +12,7 @@ document.addEventListener("DOMContentLoaded",() => {
         {
             li.style.color = selectedColor;
         }
-
+        li.innerHTML=li.innerHTML +'<button class="remove">Remove</button>';
         document.querySelector('#list').append(li);
         document.querySelector('#task').value = '';
 
@@ -42,6 +41,7 @@ document.addEventListener("DOMContentLoaded",() => {
             let li = document.createElement('li');
             li.textContent = item.text;
             li.style.color = item.color;
+            li.innerHTML=li.innerHTML +'<button class="remove">Remove</button>';
             document.querySelector('#list').append(li);
         });
     }
@@ -49,7 +49,10 @@ document.addEventListener("DOMContentLoaded",() => {
     
     document.querySelector('#button').disabled = true;
     document.querySelectorAll('button').forEach((button) => {
-        button.disabled = true;
+        if(!button.classList.contains('remove'))
+        {
+            button.disabled = true;
+        }
     })
 
     document.querySelector('#task').onkeyup = () => {
@@ -58,7 +61,7 @@ document.addEventListener("DOMContentLoaded",() => {
 
         document.querySelector('#button').disabled = !hasText;
         document.querySelectorAll('button').forEach((button) => {
-            if(button.id !== 'button') 
+            if(button.id !== 'button' && !button.classList.contains('remove'))
             {
                 button.disabled = !hasText;
             }
@@ -67,10 +70,9 @@ document.addEventListener("DOMContentLoaded",() => {
 
     document.querySelector('form').onsubmit = () => {
         checkLimit();
-        createTask();
-        document.querySelector('h1').innerHTML = list.length;      
+        createTask();      
         document.querySelectorAll('button').forEach((button) => {
-            if(button.id !== 'button') 
+            if(button.id !== 'button' && !button.classList.contains('remove'))
             {
                 button.disabled = true;
                 selectedColor = null;
@@ -79,7 +81,7 @@ document.addEventListener("DOMContentLoaded",() => {
         return false;
     }
     document.querySelectorAll('button').forEach((button) => {
-        if(button.id !== 'button') 
+        if(button.id !== 'button' && !button.classList.contains('remove'))
         {  
             button.onclick = () => {
                 selectedColor = button.dataset.color; 
@@ -95,6 +97,24 @@ document.addEventListener("DOMContentLoaded",() => {
     document.querySelector('#refresh').onclick = () =>{
         location.reload();
     }
+
+    document.addEventListener('click', event =>{
+        const element = event.target;
+        if(element.className === 'remove')
+        {
+            element.parentElement.style.animationPlayState = 'running';
+            element.parentElement.addEventListener('animationend', ()=>{
+                const tName = element.parentElement.firstChild.textContent.trim();
+                list = list.filter(item => item.text !== tName);
+                localStorage.setItem('list',JSON.stringify(list));
+                element.parentElement.remove();
+                if (list.length === 0)
+                {
+                    location.reload();
+                }
+            });
+        }
+    })
 });
 
 window.onscroll = () => {

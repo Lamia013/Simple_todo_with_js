@@ -14,11 +14,35 @@
                 left: 50%;
             }
         }
+        @keyframes remove {
+            from {
+                opacity: 1;
+                
+            }
+            to {
+                opacity: 0;
+               
+            }
+        }
         #animation{
             position: relative;
             animation-name: slide;
             animation-duration: 3s;
             animation-fill-mode: forwards;
+        }
+        #list li {
+            display: flex;
+            width: 50%;
+            border-radius: 10px;               
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5%;          
+            border: 1px solid #ddd;
+            padding: 1%;
+            animation-name: remove;
+            animation-duration: 2s;
+            animation-fill-mode: forwards;
+            animation-play-state: paused;
         }
     </style>
 </head>

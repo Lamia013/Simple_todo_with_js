@@ -1,2 +1,2 @@
 # Simple_todo_with_js
-A simple todo page that adds tasks. No backend. 
+A simple todo page that allows users to add tasks with a chosen font color. Tasks are displayed in a list and stored in the browser's local storage, so they persist across page reloads. Users can also clear or refresh the task list.
